@@ -1,0 +1,438 @@
+
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f8f7f3">
+
+    <meta
+        name="description"
+        content="Encontre seu novo melhor amigo no MatchPet. Conheça cães, gatos e muito mais que esperam por um lar."
+    >
+
+    <title>MatchPet — encontre seu par pet</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <header class="site-header">
+
+        <a class="brand" href="#inicio" aria-label="MatchPet, início">
+    <img src="images/logo.png" alt="MatchPet" class="brand-logo">
+</a>
+
+        <button
+            class="menu-toggle"
+            id="menuToggle"
+            aria-label="Abrir menu"
+            aria-expanded="false"
+        >
+            ☰
+        </button>
+
+        <nav class="main-nav" id="mainNav" aria-label="Navegação principal">
+            <a class="nav-link active" href="#encontrar">
+                Encontrar um pet
+            </a>
+
+            <a class="nav-link" href="#encontrar">
+                Conheça os pets
+            </a>
+
+            <button class="nav-link nav-button" id="navPetForm" type="button">
+                Cadastrar pet
+            </button>
+        </nav>
+
+        <div class="header-actions">
+
+            <button
+                class="saved-link"
+                id="showFavorites"
+                aria-label="Ver favoritos"
+            >
+                <span aria-hidden="true">♡</span>
+                <span class="saved-label">Favoritos</span>
+                <b class="favorite-count" id="favoriteCount">0</b>
+            </button>
+
+            <button class="button button-dark button-small" id="openPetForm">
+                Cadastrar para ter um match
+                <span aria-hidden="true">↗</span>
+            </button>
+
+        </div>
+    </header>
+
+
+    <main id="inicio">
+
+        <!-- HERO -->
+        <section class="hero" aria-labelledby="heroTitle">
+
+            <div class="hero-copy">
+
+                <div class="eyebrow">
+                    <span class="eyebrow-dot"></span>
+                    A família fica mais completa com eles
+                </div>
+
+                <h1 id="heroTitle">
+                    O amor da sua vida<br>
+                    pode ter <span>quatro patas.</span>
+                </h1>
+
+                <p class="hero-text">
+                    Tem um focinho por aí esperando exatamente por você.
+                    Vamos encontrar?
+                </p>
+
+                <form class="hero-search" id="heroSearch">
+
+                    <label class="search-field">
+                        <span class="search-icon" aria-hidden="true">⌕</span>
+                        <span class="sr-only">Cidade ou estado</span>
+
+                        <input
+                            id="locationSearch"
+                            type="search"
+                            placeholder="Sua cidade ou estado"
+                            autocomplete="address-level2"
+                        >
+                    </label>
+
+                    <button class="button button-orange" type="submit">
+                        Encontrar meu pet
+                        <span aria-hidden="true">→</span>
+                    </button>
+
+                </form>
+
+                <div class="hero-trust">
+
+                    <span class="avatar-stack">
+                        <i>🐕</i>
+                        <i>🐈</i>
+                        <i>🐶</i>
+                    </span>
+
+                    <span>
+                        <strong>+2.400 famílias</strong>
+                        encontraram seu par por aqui
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="hero-art" aria-label="Cachorro disponível para adoção">
+
+                <div class="hero-image"></div>
+
+                <div class="hero-sticker">
+                    <span>um amor</span>
+
+                    <strong>
+                        pra chamar<br>
+                        de seu <span>♥</span>
+                    </strong>
+                </div>
+
+                <div class="hero-note">
+
+                    <span class="note-paw">✳</span>
+
+                    <span>
+                        Conheça o<br>
+                        <strong>Tobias</strong>
+                    </span>
+
+                    <button
+                        class="note-arrow"
+                        data-pet="tobias"
+                        aria-label="Conhecer Tobias"
+                    >
+                        ↗
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="hero-scribble" aria-hidden="true">✳</div>
+
+        </section>
+
+
+      
+        <section
+            class="adoption-section"
+            id="encontrar"
+            aria-labelledby="petsTitle"
+        >
+
+            <div class="section-heading">
+
+                <div>
+
+                    <p class="eyebrow">
+                        Seu próximo melhor amigo
+                    </p>
+
+                    <h2 id="petsTitle">
+                        Tem alguém esperando <span>por você.</span>
+                    </h2>
+
+                    <p class="section-subtitle">
+                        Cada perfil tem uma história.
+                        Que tal começar a sua juntos?
+                    </p>
+
+                </div>
+
+                <button class="text-link" id="clearFilters">
+                    Ver todos os pets
+                    <span aria-hidden="true">→</span>
+                </button>
+
+            </div>
+
+
+            <!-- FILTROS -->
+            <div class="filter-panel">
+
+                <div
+                    class="filter-tabs"
+                    role="group"
+                    aria-label="Tipo de animal"
+                >
+
+                    <button class="filter-tab selected" data-species="Todos">
+                        Todos <span>🐾</span>
+                    </button>
+
+                    <button class="filter-tab" data-species="Cachorro">
+                        Cachorros <span>🐕</span>
+                    </button>
+
+                    <button class="filter-tab" data-species="Gato">
+                        Gatos <span>🐈</span>
+                    </button>
+
+                    <button class="filter-tab" data-species="Outros">
+                        Outros animais <span>🐇</span>
+                    </button>
+
+                </div>
+
+
+                <div class="filter-controls">
+
+                    <label class="filter-search">
+                        <span aria-hidden="true">⌕</span>
+
+                        <input
+                            id="nameSearch"
+                            type="search"
+                            placeholder="Nome, raça ou cidade"
+                        >
+                    </label>
+
+
+                    <label>
+                        <span class="sr-only">Porte</span>
+
+                        <select id="sizeFilter">
+                            <option value="">Qualquer porte</option>
+                            <option>Pequeno</option>
+                            <option>Médio</option>
+                            <option>Grande</option>
+                        </select>
+                    </label>
+
+
+                    <label>
+                        <span class="sr-only">Idade</span>
+
+                        <select id="ageFilter">
+                            <option value="">Qualquer idade</option>
+                            <option value="filhote">Filhote</option>
+                            <option value="adulto">Adulto</option>
+                            <option value="idoso">Idoso</option>
+                        </select>
+                    </label>
+
+
+                    <label>
+                        <span class="sr-only">Localização</span>
+
+                        <select id="cityFilter">
+                            <option value="">Qualquer cidade</option>
+                        </select>
+                    </label>
+
+                </div>
+
+            </div>
+
+
+        
+            <div class="results-line">
+
+                <span id="resultsCount">
+                    Mostrando pets cheios de amor
+                </span>
+
+                <button class="favorites-only" id="favoritesOnly">
+                    <span aria-hidden="true">♡</span>
+                    Só meus favoritos
+                </button>
+
+            </div>
+
+
+        
+            <div class="pet-grid" id="petGrid" aria-live="polite"></div>
+
+
+      
+            <div class="empty-state hidden" id="emptyState">
+
+                <span>🐾</span>
+
+                <h3>Não encontramos esse match ainda</h3>
+
+                <p>
+                    Tente mudar os filtros para conhecer mais pets.
+                </p>
+
+                <button class="button button-dark" id="emptyReset">
+                    Limpar filtros
+                </button>
+
+            </div>
+
+
+            <div class="more-wrap">
+
+                <button class="button button-outline" id="loadMore">
+                    Carregar mais pets
+                    <span aria-hidden="true">↓</span>
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <section class="cta-section">
+
+            <div>
+
+                <p class="eyebrow">
+                    Faz parte dessa corrente do bem
+                </p>
+
+                <h2>
+                    Tem um pet procurando<br>
+                    uma família?
+                </h2>
+
+                <p>
+                    Cadastre um pet e ajude essa história a começar.
+                </p>
+
+                <button class="button button-dark" id="ctaPetForm">
+                    Cadastrar um pet
+                    <span aria-hidden="true">→</span>
+                </button>
+
+            </div>
+
+            <div class="cta-doodle" aria-hidden="true">
+                ♡
+                <span>✳</span>
+            </div>
+
+        </section>
+
+    </main>
+
+
+    
+    <footer class="site-footer">
+
+        <a class="brand" href="#inicio" aria-label="MatchPet, início">
+    <img src="images/logo.png" alt="MatchPet" class="brand-logo">
+</a>
+
+        <p>
+            Feito com carinho para conectar corações e focinhos.
+        </p>
+
+        <div class="footer-links">
+
+            <a href="#como-funciona">Como funciona</a>
+
+            <a href="#encontrar">Encontrar um pet</a>
+
+            <button id="footerPetForm">Sou uma ONG</button>
+
+        </div>
+
+        <small>
+            © 2026 MatchPet. Um lar muda tudo.
+            <span>Protótipo demonstrativo.</span>
+        </small>
+
+    </footer>
+
+
+    
+    <dialog class="modal" id="petModal" aria-labelledby="petModalTitle">
+
+        <button class="modal-close" data-close aria-label="Fechar">
+            ×
+        </button>
+
+        <div id="petModalContent"></div>
+
+    </dialog>
+
+
+    
+    <dialog
+        class="modal form-modal"
+        id="formModal"
+        aria-labelledby="formModalTitle"
+    >
+
+        <button class="modal-close" data-close aria-label="Fechar">
+            ×
+        </button>
+
+        <div id="formModalContent"></div>
+
+    </dialog>
+
+
+    
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+
+   
+    <script src="script.js"></script>
+
+</body>
+</html>
