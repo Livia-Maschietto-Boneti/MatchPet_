@@ -186,17 +186,33 @@ class MatchPetCliTest {
         Pet atualizado = new Pet("123", "Luna Nova", "Cachorro", 3);
 
         when(service.buscar("123")).thenReturn(atual);
-        when(service.atualizar("123", "Luna Nova", "Cachorro", 3))
-                .thenReturn(atualizado);
+
+        when(service.atualizar(
+                "123",
+                "Luna Nova",
+                "Cachorro",
+                3,
+                "",
+                "",
+                List.of()
+        )).thenReturn(atualizado);
 
         String resultado = executarCli(
                 service,
-                "4\n123\nLuna Nova\nCachorro\n3\n0\n"
+                "4\n123\nLuna Nova\nCachorro\n3\n\n\n\n0\n"
         );
 
         assertTrue(resultado.contains("Pet atualizado: Luna Nova"));
 
-        verify(service).atualizar("123", "Luna Nova", "Cachorro", 3);
+        verify(service).atualizar(
+                "123",
+                "Luna Nova",
+                "Cachorro",
+                3,
+                "",
+                "",
+                List.of()
+        );
     }
 
     @Test
@@ -206,17 +222,33 @@ class MatchPetCliTest {
         Pet atual = new Pet("123", "Luna", "Gato", 2);
 
         when(service.buscar("123")).thenReturn(atual);
-        when(service.atualizar("123", "Luna", "Gato", 2))
-                .thenReturn(atual);
+
+        when(service.atualizar(
+                "123",
+                "Luna",
+                "Gato",
+                2,
+                "",
+                "",
+                List.of()
+        )).thenReturn(atual);
 
         String resultado = executarCli(
                 service,
-                "4\n123\n\n\n\n0\n"
+                "4\n123\n\n\n\n\n\n\n0\n"
         );
 
         assertTrue(resultado.contains("Pet atualizado: Luna"));
 
-        verify(service).atualizar("123", "Luna", "Gato", 2);
+        verify(service).atualizar(
+                "123",
+                "Luna",
+                "Gato",
+                2,
+                "",
+                "",
+                List.of()
+        );
     }
 
     @Test

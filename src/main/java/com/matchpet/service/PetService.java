@@ -56,15 +56,47 @@ public class PetService {
         return cadastrar(nome, especie, idade, "", "", List.of());
     }
 
-    public Pet atualizar(String id, String nome, String especie, int idade) {
+    // ATUALIZAR COM TODOS OS CAMPOS
+    public Pet atualizar(String id, String nome, String especie, int idade,
+                         String cidade, String estado,
+                         List<String> caracteristicas) {
+
         validar(nome, especie, idade);
 
         Pet pet = buscar(id);
+
         pet.setNome(nome.trim());
         pet.setEspecie(especie.trim());
         pet.setIdade(idade);
+        pet.setLocalizacao(new Localizacao(cidade, estado));
+        pet.setCaracteristicas(caracteristicas);
 
         return repository.save(pet);
+    }
+
+    // MANTER COMPATIBILIDADE COM CHAMADAS ANTIGAS
+    public Pet atualizar(String id, String nome, String especie, int idade) {
+
+        Pet atual = buscar(id);
+
+        String cidade = atual.getLocalizacao() != null
+                ? atual.getLocalizacao().getCidade() : "";
+
+        String estado = atual.getLocalizacao() != null
+                ? atual.getLocalizacao().getEstado() : "";
+
+        List<String> caracteristicas = atual.getCaracteristicas() != null
+                ? atual.getCaracteristicas() : List.of();
+
+        return atualizar(
+                id,
+                nome,
+                especie,
+                idade,
+                cidade,
+                estado,
+                caracteristicas
+        );
     }
 
     public void excluir(String id) {

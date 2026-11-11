@@ -132,15 +132,49 @@ public class MatchPetCli implements CommandLineRunner {
     private void atualizar() {
         String id = ler("ID do pet: ");
         Pet atual = service.buscar(id);
+
         imprimir(atual);
+
         out.println("Pressione Enter para manter o valor atual.");
+
         String nome = ler("Nome [" + atual.getNome() + "]: ");
         String especie = ler("Espécie [" + atual.getEspecie() + "]: ");
+        int idade = lerIdade(atual.getIdade());
+
+        String cidadeAtual = atual.getLocalizacao() != null
+                ? atual.getLocalizacao().getCidade() : "";
+
+        String estadoAtual = atual.getLocalizacao() != null
+                ? atual.getLocalizacao().getEstado() : "";
+
+        String cidade = ler("Cidade [" + cidadeAtual + "]: ");
+        String estado = ler("Estado [" + estadoAtual + "]: ");
+
+        String caracteristicasAtuais = atual.getCaracteristicas() != null
+                ? String.join(", ", atual.getCaracteristicas()) : "";
+
+        String textoCaracteristicas = ler(
+                "Características [" + caracteristicasAtuais + "]: "
+        );
+
+        List<String> caracteristicas = textoCaracteristicas.isBlank()
+                ? (atual.getCaracteristicas() != null
+                   ? atual.getCaracteristicas() : List.of())
+                : java.util.Arrays.stream(textoCaracteristicas.split(","))
+                .map(String::trim)
+                .filter(s -> !s.isBlank())
+                .toList();
+
         Pet pet = service.atualizar(
                 id,
                 nome.isBlank() ? atual.getNome() : nome,
                 especie.isBlank() ? atual.getEspecie() : especie,
-                lerIdade(atual.getIdade()));
+                idade,
+                cidade.isBlank() ? cidadeAtual : cidade,
+                estado.isBlank() ? estadoAtual : estado,
+                caracteristicas
+        );
+
         out.println("Pet atualizado: " + pet.getNome());
     }
 
