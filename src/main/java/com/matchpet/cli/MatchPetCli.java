@@ -46,7 +46,8 @@ public class MatchPetCli implements CommandLineRunner {
                 out.println("\nEntrada encerrada. A operação em andamento foi cancelada.");
                 executando = false;
             } catch (DataAccessException exception) {
-                out.println("Não foi possível acessar o MongoDB. Verifique se o servidor está ativo e se MONGODB_URI está correta.");
+                out.println("Erro ao acessar o MongoDB:");
+                exception.printStackTrace(out);
             } catch (IllegalArgumentException exception) {
                 out.println("Erro: " + exception.getMessage());
             }
@@ -96,13 +97,37 @@ public class MatchPetCli implements CommandLineRunner {
         imprimir(service.buscar(ler("ID do pet: ")));
     }
 
+
     private void cadastrar() {
+
+        String nome = ler("Nome: ");
+        String especie = ler("Espécie: ");
+        int idade = lerIdade();
+
+        String cidade = ler("Cidade: ");
+        String estado = ler("Estado: ");
+
+        String textoCaracteristicas =
+                ler("Características (separadas por vírgula): ");
+
+        List<String> caracteristicas = java.util.Arrays.stream(
+                        textoCaracteristicas.split(",")
+                ).map(String::trim)
+                .filter(s -> !s.isBlank())
+                .toList();
+
         Pet pet = service.cadastrar(
-                ler("Nome: "),
-                ler("Espécie: "),
-                lerIdade());
+                nome,
+                especie,
+                idade,
+                cidade,
+                estado,
+                caracteristicas
+        );
+
         out.println("Pet cadastrado com ID: " + pet.getId());
     }
+
 
     private void atualizar() {
         String id = ler("ID do pet: ");
@@ -130,10 +155,27 @@ public class MatchPetCli implements CommandLineRunner {
         out.println("Pet excluído.");
     }
 
+
     private void imprimir(Pet pet) {
+
         out.printf("%s | %s | %s | %d ano(s)%n",
-                pet.getId(), pet.getNome(), pet.getEspecie(), pet.getIdade());
+                pet.getId(),
+                pet.getNome(),
+                pet.getEspecie(),
+                pet.getIdade());
+
+        if (pet.getLocalizacao() != null) {
+            out.println("Cidade: " + pet.getLocalizacao().getCidade());
+            out.println("Estado: " + pet.getLocalizacao().getEstado());
+        }
+
+        if (pet.getCaracteristicas() != null) {
+            out.println("Características: " + pet.getCaracteristicas());
+        }
+
+        out.println("----------------------------");
     }
+
 
     private String ler(String mensagem) {
         out.print(mensagem);
